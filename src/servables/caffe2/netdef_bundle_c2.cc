@@ -268,6 +268,12 @@ Caffe2WorkspaceCreate(
   netdef_model.mutable_device_option()->CopyFrom(device_option);
 
   for (int i = 0; i < netdef_model.op().size(); ++i) {
+    if (netdef_model.op(i).has_device_option()) {
+      std::cerr << netdef_model.op(i).name() << ": " << netdef_model.op(i).device_option().ShortDebugString() << std::endl;
+    } else {
+      std::cerr << netdef_model.op(i).name() << ": none" << std::endl;
+    }
+
     netdef_model.mutable_op(i)->mutable_device_option()->CopyFrom(
         device_option);
   }
