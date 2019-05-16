@@ -161,12 +161,6 @@ def validate_for_onnx_model(input_dtype, output0_dtype, output1_dtype,
     if (input_dtype == np.object) or (output0_dtype == np.object) or (output1_dtype == np.object):
         return False
 
-    # Input and output shapes must be fixed-size.
-    if (not shape_is_fixed(input_shape) or
-        not shape_is_fixed(output0_shape) or
-        not shape_is_fixed(output1_shape)):
-        return False
-
     return True
 
 def get_model_name(pf, input_dtype, output0_dtype, output1_dtype):
