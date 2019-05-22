@@ -413,14 +413,14 @@ max_batch_size: {}
         config += '''
 input [
   {{
-    name: "INPUT{}"
+    name: "INPUT__{}"
     data_type: {}
     dims: [ {} ]
   }}
 ]
 output [
   {{
-    name: "OUTPUT{}"
+    name: "OUTPUT__{}"
     data_type: {}
     dims: [ {} ]
   }}
@@ -510,7 +510,7 @@ def create_onnx_modelconfig(
     model_name = tu.get_zero_model_name("onnx_nobatch" if max_batch == 0 else "onnx",
                                    io_cnt, dtype)
     config_dir = models_dir + "/" + model_name
-    
+
     # Must make sure all Onnx models will be loaded to the same GPU if they are
     # run on GPU. This is due to the current limitation of Onnx Runtime
     # https://github.com/microsoft/onnxruntime/issues/1034
@@ -522,7 +522,7 @@ instance_group [
   }
 ]
 '''
-    
+
     config = emu.create_general_modelconfig(model_name, "onnxruntime_onnx", max_batch,
             emu.repeat(dtype, io_cnt), emu.repeat(shape, io_cnt), emu.repeat(shape, io_cnt),
             emu.repeat(dtype, io_cnt), emu.repeat(shape, io_cnt), emu.repeat(shape, io_cnt),
