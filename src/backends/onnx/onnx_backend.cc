@@ -26,11 +26,10 @@
 
 #include "src/backends/onnx/onnx_backend.h"
 
-#include <NvInfer.h>
 #include <core/providers/cuda/cuda_provider_factory.h>
+#include <cuda_runtime_api.h>
 #include <stdint.h>
 #include <mutex>
-#include "cuda/include/cuda_runtime_api.h"
 #include "src/backends/onnx/onnx_utils.h"
 #include "src/core/constants.h"
 #include "src/core/logging.h"

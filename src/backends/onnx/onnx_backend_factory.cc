@@ -29,6 +29,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include "src/backends/onnx/onnx_backend.h"
 #include "src/backends/onnx/onnx_utils.h"
 #include "src/core/constants.h"
 #include "src/core/filesystem.h"
@@ -47,14 +48,15 @@ OnnxBackendFactory::~OnnxBackendFactory()
 
 Status
 OnnxBackendFactory::Create(
-    const OnnxPlatformConfig& platform_config,
+    const std::shared_ptr<BackendConfig>& backend_config,
     std::unique_ptr<OnnxBackendFactory>* factory)
 {
-  LOG_VERBOSE(1) << "Create OnnxBackendFactory for platform config \""
-                 << platform_config.DebugString() << "\"";
+  LOG_VERBOSE(1) << "Create OnnxBackendFactory";
 
+  auto onnxruntime_backend_config =
+      std::static_pointer_cast<Config>(backend_config);
   std::unique_ptr<OnnxBackendFactory> local(
-      new OnnxBackendFactory(platform_config));
+      new OnnxBackendFactory(onnxruntime_backend_config));
   RETURN_IF_ORT_ERROR(
       OrtCreateEnv(ORT_LOGGING_LEVEL_WARNING, "log", &local->env_));
 
